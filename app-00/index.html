@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fbf4eb">
+  <meta name="description" content="今の気分にぴったりのコーヒーとおやつを、猫ちゃんが占い感覚でおすすめします。">
+  <title>今日の おうちコーヒー＆おやつコンシェルジュ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body class="min-h-screen">
+  <main class="page-shell mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-12">
+    <header class="text-center">
+      <div class="brand-mark mx-auto mb-4 flex items-center justify-center" aria-hidden="true">
+        <span class="brand-cup">☕</span>
+        <span class="brand-cat">🐈</span>
+      </div>
+      <p class="eyebrow mb-2">A LITTLE PAUSE, JUST FOR YOU</p>
+      <h1 class="text-3xl font-bold leading-tight sm:text-4xl">今日の「おうちコーヒー<br class="sm:hidden">＆おやつ」コンシェルジュ</h1>
+      <p class="intro mx-auto mt-4 max-w-md text-base leading-7 sm:text-lg">
+        今の気分にぴったりの一杯と、<br class="sm:hidden">小さなご褒美を見つけよう。
+      </p>
+    </header>
+
+    <section class="mood-section mt-8 sm:mt-10" aria-labelledby="mood-heading">
+      <div class="section-heading mb-4 text-center">
+        <span class="section-kicker">01 / YOUR MOOD</span>
+        <h2 id="mood-heading" class="mt-1 text-xl font-bold">今の気分を直感で選んでね</h2>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-3">
+        <button class="mood-button mood-relax" type="button" data-mood="relax" aria-pressed="false">
+          <span class="mood-icon" aria-hidden="true">🌿</span>
+          <span class="mood-label">リラックスしたい</span>
+          <span class="mood-caption">ほっとひと息、癒やされたい</span>
+        </button>
+        <button class="mood-button mood-sweet" type="button" data-mood="sweet" aria-pressed="false">
+          <span class="mood-icon" aria-hidden="true">🍰</span>
+          <span class="mood-label">甘いものを食べたい</span>
+          <span class="mood-caption">ご褒美で糖分チャージ</span>
+        </button>
+        <button class="mood-button mood-focus" type="button" data-mood="focus" aria-pressed="false">
+          <span class="mood-icon" aria-hidden="true">💡</span>
+          <span class="mood-label">集中したい</span>
+          <span class="mood-caption">シャキッと切り替えたい</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="result-section mt-8" aria-labelledby="result-heading" aria-live="polite">
+      <div id="result-placeholder" class="placeholder-card rounded-3xl px-5 py-8 text-center sm:px-8">
+        <span class="placeholder-icon" aria-hidden="true">☕</span>
+        <p class="mt-3 font-semibold">上のボタンから気分を選んでね</p>
+        <p class="mt-1 text-sm">猫ちゃんが今日の組み合わせを占うよ</p>
+      </div>
+
+      <article id="result-card" class="result-card hidden rounded-3xl p-5 sm:p-8" aria-labelledby="result-heading">
+        <div class="result-topline flex items-center justify-between gap-3">
+          <span class="result-badge">TODAY'S LITTLE FORTUNE</span>
+          <span id="result-mood" class="result-mood"></span>
+        </div>
+        <h2 id="result-heading" class="result-title mt-3 text-2xl font-bold sm:text-3xl">あなたへのおすすめ</h2>
+
+        <div class="recommendations mt-6 grid gap-3 sm:grid-cols-2">
+          <div class="recommendation coffee-tile">
+            <span class="tile-icon" aria-hidden="true">☕</span>
+            <div>
+              <p class="tile-label">今日のコーヒー</p>
+              <p id="result-coffee" class="tile-value"></p>
+            </div>
+          </div>
+          <div class="recommendation snack-tile">
+            <span class="tile-icon" aria-hidden="true">🍪</span>
+            <div>
+              <p class="tile-label">小さなおやつ</p>
+              <p id="result-snack" class="tile-value"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-note mt-4 flex items-center gap-4 rounded-2xl p-4 sm:p-5">
+          <span id="result-cat-emoji" class="cat-emoji" aria-hidden="true"></span>
+          <div>
+            <p id="result-cat-name" class="cat-name font-bold"></p>
+            <p id="result-cat-message" class="cat-message mt-1 leading-6"></p>
+          </div>
+        </div>
+
+        <div class="lucky-note mt-4 rounded-2xl p-4">
+          <p class="lucky-label"><span aria-hidden="true">✦</span> ラッキーアクション</p>
+          <p id="result-advice" class="mt-1 font-medium leading-6"></p>
+        </div>
+
+        <button id="reroll-button" class="reroll-button mt-5 w-full rounded-full px-5 py-3 font-bold" type="button">
+          もう一度占う <span aria-hidden="true">↻</span>
+        </button>
+      </article>
+    </section>
+
+    <p id="storage-status" class="storage-status mt-3 text-center text-sm" role="status" aria-live="polite"></p>
+
+    <section class="history-section mt-10" aria-labelledby="history-heading">
+      <div class="history-header flex items-end justify-between gap-3">
+        <div>
+          <span class="section-kicker">02 / YOUR LITTLE MOMENTS</span>
+          <h2 id="history-heading" class="mt-1 text-xl font-bold">最近のひと息</h2>
+        </div>
+        <button id="clear-history" class="clear-button" type="button">履歴をクリア</button>
+      </div>
+      <div id="history-list" class="mt-4"></div>
+      <p id="history-empty" class="history-empty mt-3 rounded-2xl px-4 py-5 text-center text-sm">
+        ここに診断履歴が残るよ。まずは気分を選んでみてね。
+      </p>
+    </section>
+
+    <footer class="mt-10 pb-2 text-center text-xs">
+      <p>あたたかい一杯と、やさしい休憩を。 <span aria-hidden="true">♡</span></p>
+    </footer>
+  </main>
+</body>
+</html>
